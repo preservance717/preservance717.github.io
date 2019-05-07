@@ -6,28 +6,9 @@
     <description>Recent content in Categories on LG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 May 2019 22:35:36 +0800</lastBuildDate>
     
 	<atom:link href="https://preservance717.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>category</title>
-      <link>https://preservance717.github.io/categories/category/</link>
-      <pubDate>Mon, 06 May 2019 22:35:36 +0800</pubDate>
-      
-      <guid>https://preservance717.github.io/categories/category/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>subcategory</title>
-      <link>https://preservance717.github.io/categories/subcategory/</link>
-      <pubDate>Mon, 06 May 2019 22:35:36 +0800</pubDate>
-      
-      <guid>https://preservance717.github.io/categories/subcategory/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>
