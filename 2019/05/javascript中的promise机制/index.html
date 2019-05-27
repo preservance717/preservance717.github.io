@@ -7,20 +7,40 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Hugo 0.55.1 with theme Tranquilpeak 0.4.3-SNAPSHOT">
 <meta name="author" content="L G">
-<meta name="keywords" content="">
-<meta name="description" content="Hugo tranquilpeak theme demo">
+<meta name="keywords" content="Promise">
+<meta name="description" content="">
 
 
-<meta property="og:description" content="Hugo tranquilpeak theme demo">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LG">
-<meta name="twitter:title" content="LG">
-<meta property="og:url" content="https://preservance717.github.io/">
-<meta property="twitter:url" content="https://preservance717.github.io/">
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中的Promise机制">
+<meta name="twitter:title" content="JavaScript中的Promise机制">
+<meta property="og:url" content="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/">
+<meta property="twitter:url" content="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/">
 <meta property="og:site_name" content="LG">
-<meta property="og:description" content="Hugo tranquilpeak theme demo">
-<meta name="twitter:description" content="Hugo tranquilpeak theme demo">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
 <meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-05-27T21:57:29">
+  
+  
+    <meta property="article:modified_time" content="2019-05-27T21:57:29">
+  
+  
+  
+    
+      <meta property="article:section" content="category">
+    
+      <meta property="article:section" content="subcategory">
+    
+  
+  
+    
+      <meta property="article:tag" content="JavaScript">
+    
+  
 
 
 <meta name="twitter:card" content="summary">
@@ -39,16 +59,14 @@
   <meta property="twitter:image" content="https://preservance717.github.io/avatar.jpg">
 
 
-    <title>LG</title>
+    <title>JavaScript中的Promise机制</title>
 
     <link rel="icon" href="https://preservance717.github.io/favicon.png">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://preservance717.github.io/index.xml">
-    
 
     
 
-    <link rel="canonical" href="https://preservance717.github.io/">
+    <link rel="canonical" href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -68,7 +86,7 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
     <a class="header-title-link" href="https://preservance717.github.io/">LG</a>
@@ -88,7 +106,7 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
@@ -198,275 +216,99 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="4"
         class="
                hasCoverMetaIn
                ">
-        <section class="postShorten-group main-content-wrap">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      JavaScript中的Promise机制
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h2 id="promise是什么">Promise是什么</h2>
+
+<p>Promise是异步处理对象以及对其进行各种操作的组件。一个Promise对象代表一个目前不可用，但是在未来的某个时间点可以被解析值。允许以同步的方式编写异步代码。</p>
+
+<h2 id="promise出现的原因">Promise出现的原因</h2>
+
+<p>在promise之前，在JS中的异步编程都是采用回调函数和事件的方式，但是这种编程方式在处理复杂的业务情况下，很容易出现回调多层嵌套，使得代码很难理解和被维护。
+Promise改善了这种情形下的异步编程的解决方案，它是由社区提出和实现的。ES6将其写进了语言标准，统一了用法，并且提供了一个原生的对象Promise</p>
+
+<h2 id="promise的api">Promise的API</h2>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/3126944-5ff96b9cb528f310.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="promise.png" />
+从这个简单的例子可以看出我们需要基本掌握的是</p>
+
+<ul>
+<li>Promise的构造函数</li>
+<li>resolve()、reject()</li>
+<li>then()</li>
+</ul>
+
+<h3 id="a-promise的构造函数">a、promise的构造函数</h3>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/3126944-111469c9dab93f30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="demo.png" /></p>
+
+<p>执行结果如下：
+<img src="http://upload-images.jianshu.io/upload_images/3126944-fa877f4052e2af88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="reslult.png" /></p>
+
+<p>可以看到先输出了<code>promise</code>，再输出了<code>end</code>。
+当通过Promise构造函数实例化一个对象时，会传递一个函数作为参数，而且这个函数在新建一个Promise后，会立即执行。</p>
+
+<h3 id="b-resolve-reject">b、resolve/reject</h3>
+
+<p>在Promise中，Promise操作有3中状态，但是其只存在于三种状态的一种。其关系如下：</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/3126944-7fba8fa43f5a16e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="关系图.png" />
+注意：这种状态的改变只能从未完状态到完成态或失败态转变，不能逆反。完成态和失败态不能相互转化，而且，状态一旦转化则不能修改。
+只有异步操作的结果，才能决定当前状态是哪一种状态，任何其他操作无法改变这一状态。
+通常，我们在声明一个Promise对象的实例时，在我们传入的匿名参数中：</p>
+
+<ul>
+<li>resolve代表完成态后的操作</li>
+<li>reject代表失败态后的操作</li>
+</ul>
+
+<h3 id="c-then">c、then</h3>
+
+<p>了解到上面那些之后，我们也许会问<code>then</code>方法的作用是什么呢，<code>resolve</code>和<code>reject</code>又是从哪里传递过来的。
+其实，我们在实例化Promise对象时，调用该对象的实例方法then，其中then的第一个参数对应着完成状态的操作，也就是resolve，第二个参数代表着失败态的操作，是reject。
+总的来说，Promise通过 <code>then</code>方法来指定处理异步操作结果的方法。</p>
+
+<h2 id="未完待续">未完待续。。。</h2>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
             
-  
-    
-      
-        
-      
-    
-  
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://preservance717.github.io/tags/javascript/">JavaScript</a>
 
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/">
-          Angular ChangeDetection变更检测
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
+                  </div>
+                
+              
             
+            <div class="post-actions-wrap">
   
-    
-      
-        
-      
-    
-  
+</div>
 
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-          Sticky Footer的实现
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
             
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8C%87%E5%8D%97/">
-          WebStorm快捷键指南
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>之前练习过一段时间的WebStorm的快捷键的使用，但是，因为我好久没有用，只记得大概的几个。所以现在整理下，对于WebStorm快捷键的使用。</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8C%87%E5%8D%97/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84this/">
-          JavaScript中的this
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>JavaScript中的this的指向在函数定义时，是不确定的。只有在函数运行的时候才能确定this指向谁。this可以是全局对象，当前对象或者任意对象。取决于函数的调用方式。JavaScript中函数调用的方式如下：作为对象方法调用，作为函数调用，作为构造函数调用和使用apply，bind调用。</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84this/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E7%9A%84for%E5%BE%AA%E7%8E%AF%E9%97%AD%E5%8C%85/">
-          JavaScript的for循环闭包
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E7%9A%84for%E5%BE%AA%E7%8E%AF%E9%97%AD%E5%8C%85/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/">
-          JavaScript中的Promise机制
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/hello/">
-          Hello
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>Hello Hugo</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/hello/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-          
-
-        </section>
+          </div>
+        </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
     &copy; 2019 L G. All Rights Reserved
@@ -474,6 +316,37 @@
 </footer>
 
       </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fjavascript%25E4%25B8%25AD%25E7%259A%2584promise%25E6%259C%25BA%25E5%2588%25B6%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fjavascript%25E4%25B8%25AD%25E7%259A%2584promise%25E6%259C%25BA%25E5%2588%25B6%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fjavascript%25E4%25B8%25AD%25E7%259A%2584promise%25E6%259C%25BA%25E5%2588%25B6%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
@@ -701,9 +574,12 @@ $(document).ready(function() {
 </script>
 
 
+  
+
 
 
 
     
   </body>
 </html>
+

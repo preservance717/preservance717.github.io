@@ -7,20 +7,40 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Hugo 0.55.1 with theme Tranquilpeak 0.4.3-SNAPSHOT">
 <meta name="author" content="L G">
-<meta name="keywords" content="">
-<meta name="description" content="Hugo tranquilpeak theme demo">
+<meta name="keywords" content="sticky Footer">
+<meta name="description" content="">
 
 
-<meta property="og:description" content="Hugo tranquilpeak theme demo">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LG">
-<meta name="twitter:title" content="LG">
-<meta property="og:url" content="https://preservance717.github.io/">
-<meta property="twitter:url" content="https://preservance717.github.io/">
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sticky Footer的实现">
+<meta name="twitter:title" content="Sticky Footer的实现">
+<meta property="og:url" content="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+<meta property="twitter:url" content="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/">
 <meta property="og:site_name" content="LG">
-<meta property="og:description" content="Hugo tranquilpeak theme demo">
-<meta name="twitter:description" content="Hugo tranquilpeak theme demo">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
 <meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-05-27T22:45:43">
+  
+  
+    <meta property="article:modified_time" content="2019-05-27T22:45:43">
+  
+  
+  
+    
+      <meta property="article:section" content="category">
+    
+      <meta property="article:section" content="subcategory">
+    
+  
+  
+    
+      <meta property="article:tag" content="CSS">
+    
+  
 
 
 <meta name="twitter:card" content="summary">
@@ -39,16 +59,14 @@
   <meta property="twitter:image" content="https://preservance717.github.io/avatar.jpg">
 
 
-    <title>LG</title>
+    <title>Sticky Footer的实现</title>
 
     <link rel="icon" href="https://preservance717.github.io/favicon.png">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://preservance717.github.io/index.xml">
-    
 
     
 
-    <link rel="canonical" href="https://preservance717.github.io/">
+    <link rel="canonical" href="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -68,7 +86,7 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
     <a class="header-title-link" href="https://preservance717.github.io/">LG</a>
@@ -88,7 +106,7 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
@@ -198,275 +216,185 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="4"
         class="
                hasCoverMetaIn
                ">
-        <section class="postShorten-group main-content-wrap">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Sticky Footer的实现
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h3 id="需求">需求</h3>
+
+<p>实现footer永远在浏览器窗口的底部。当页面内容超过一屏时，在内容的最底端；当页面内容少于一屏时，footer在窗口的底端，见下图。
+<img src="https://upload-images.jianshu.io/upload_images/3126944-905c0572abe72a7b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="demand.png" /></p>
+
+<h3 id="实现方式">实现方式</h3>
+
+<blockquote>
+<ol>
+<li>header 和 footer高度固定</li>
+<li>flex布局</li>
+</ol>
+</blockquote>
+
+<p>html代码</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;sticky footer&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&quot;header&quot;&gt;
+      header
+    &lt;/div&gt;
+    &lt;div class=&quot;content&quot;&gt;
+      content
+    &lt;/div&gt;
+    &lt;div class=&quot;footer&quot;&gt;
+      footer
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>####1.固定高度
+css代码</p>
+
+<pre><code class="language-python">.header{
+  background: #6f0096;
+  height: 60px;
+}
+
+.content{
+  background: #e8e8e8;
+  min-height: calc(100vh - 60px - 60px);
+}
+
+.footer{
+  background: #000000;
+  color:#ffffff;
+  height: 60px;
+}
+</code></pre>
+
+<p>其中，已知<code>header</code>和<code>footer</code>的高度，则要使footer在窗口的低端，只需<code>content</code>的<code>min-height</code>值为<code>100vh - 60px - 60px</code>.
+####2.flex布局
+css代码</p>
+
+<pre><code class="language-css">body{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+  margin: 0px;
+}
+.header{
+  background: #6f0096;
+}
+
+.content{
+  background: #e8e8e8;
+  flex:1;
+}
+
+.footer{
+  background: #000000;
+  color:#ffffff;
+}
+</code></pre>
+
+<p>其中，<code>body</code>分为三部分：<code>header</code>、<code>content</code>和<code>footer</code>。<code>body</code>的<code>height</code>值为100vh，<code>display</code>值为<code>flex</code>，且以列的方式展示。其次是将<code>content</code>中的<code>flex</code>属性值为1。这样就实现了footer置底。
+在这里有两个知识点的理解：
+&gt; * <code>height:100vh</code>：其中vh是viewport height视窗的高度。1vh是视窗的1%，则100vh就是视窗的100%。（其中视窗是浏览器内部的可见视区，不包括任务栏标题栏以及底部工具栏的浏览器区域大小）。
+&gt;* <code>flex: 1</code>：<code>flex</code>属性是个复合属性，由<code>flex-basis</code>、<code>flex-grow</code>和<code>flex-shrink</code>三个属性确定，其语法：<code>flex: none | auto | initial | [  &lt;flex-grow&gt;   &lt;flex-shrink&gt; ? ||  &lt;flex-basis&gt; ]</code>。
+详细见下表（暂不讨论兼容性问题）。若 <code>flex: 1</code>，则其计算值为[1,1,0%]，即伸缩比例都是1。<code>flex-grow</code>值为<code>1</code>，存在多余空间时项目放大；<code>flex-shrink</code>值为<code>1</code>，空间不足时项目缩小。</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">可选值</th>
+<th align="center">默认值</th>
+<th align="center">含义</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">flex-basis</td>
+<td align="center">length、percentage、auto</td>
+<td align="center">auto</td>
+<td align="center">弹性条目的初始主轴尺寸</td>
+<td align="center">在<code>flex</code>属性中该值如果被省略则默认为<code>0%</code>；在<code>flex</code>属性中该值如果被指定为<code>auto</code>，则伸缩基准值的计算值是自身的 <code>width</code>设置;如果自身的宽度没有定义，则长度取决于内容。</td>
+</tr>
+
+<tr>
+<td align="center">flex-grow</td>
+<td align="center">integer</td>
+<td align="center">0</td>
+<td align="center">当容器有多余的空间时，这些空间在不同条目之间的分配比例</td>
+<td align="center">在<code>flex</code>属性中该值如果被省略则默认为<code>0</code>，不能取负值。</td>
+</tr>
+
+<tr>
+<td align="center">flex-shrink</td>
+<td align="center">integer</td>
+<td align="center">1</td>
+<td align="center">当容器的空间不足时，各个条目尺寸缩小的比例</td>
+<td align="center">在<code>flex</code>属性中该值如果被省略则默认为<code>1</code>，不能取负值。</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="总结">总结：</h4>
+
+<p>相比较于这两种方式，我比较倾向于使用flexbox方式实现。因为第一种方式需要知道头部和footer的固定高度，然而有时项目中头部和footer的高度并非是固定的。
+###相关资料</p>
+
+<hr />
+
+<ul>
+<li><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html">阮一峰Flex 布局教程</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
             
-  
-    
-      
-        
-      
-    
-  
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://preservance717.github.io/tags/css/">CSS</a>
 
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/">
-          Angular ChangeDetection变更检测
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
+                  </div>
+                
+              
             
+            <div class="post-actions-wrap">
   
-    
-      
-        
-      
-    
-  
+</div>
 
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-          Sticky Footer的实现
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
             
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8C%87%E5%8D%97/">
-          WebStorm快捷键指南
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>之前练习过一段时间的WebStorm的快捷键的使用，但是，因为我好久没有用，只记得大概的几个。所以现在整理下，对于WebStorm快捷键的使用。</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8C%87%E5%8D%97/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84this/">
-          JavaScript中的this
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>JavaScript中的this的指向在函数定义时，是不确定的。只有在函数运行的时候才能确定this指向谁。this可以是全局对象，当前对象或者任意对象。取决于函数的调用方式。JavaScript中函数调用的方式如下：作为对象方法调用，作为函数调用，作为构造函数调用和使用apply，bind调用。</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84this/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E7%9A%84for%E5%BE%AA%E7%8E%AF%E9%97%AD%E5%8C%85/">
-          JavaScript的for循环闭包
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E7%9A%84for%E5%BE%AA%E7%8E%AF%E9%97%AD%E5%8C%85/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/">
-          JavaScript中的Promise机制
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/hello/">
-          Hello
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>Hello Hugo</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/hello/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-          
-
-        </section>
+          </div>
+        </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
     &copy; 2019 L G. All Rights Reserved
@@ -474,6 +402,37 @@
 </footer>
 
       </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fsticky-footer%25E7%259A%2584%25E5%25AE%259E%25E7%258E%25B0%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fsticky-footer%25E7%259A%2584%25E5%25AE%259E%25E7%258E%25B0%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fsticky-footer%25E7%259A%2584%25E5%25AE%259E%25E7%258E%25B0%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
@@ -701,9 +660,12 @@ $(document).ready(function() {
 </script>
 
 
+  
+
 
 
 
     
   </body>
 </html>
+

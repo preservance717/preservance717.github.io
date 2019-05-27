@@ -7,20 +7,42 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Hugo 0.55.1 with theme Tranquilpeak 0.4.3-SNAPSHOT">
 <meta name="author" content="L G">
-<meta name="keywords" content="">
-<meta name="description" content="Hugo tranquilpeak theme demo">
+<meta name="keywords" content="ChangeDetection">
+<meta name="description" content="">
 
 
-<meta property="og:description" content="Hugo tranquilpeak theme demo">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LG">
-<meta name="twitter:title" content="LG">
-<meta property="og:url" content="https://preservance717.github.io/">
-<meta property="twitter:url" content="https://preservance717.github.io/">
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular ChangeDetection变更检测">
+<meta name="twitter:title" content="Angular ChangeDetection变更检测">
+<meta property="og:url" content="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/">
+<meta property="twitter:url" content="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/">
 <meta property="og:site_name" content="LG">
-<meta property="og:description" content="Hugo tranquilpeak theme demo">
-<meta name="twitter:description" content="Hugo tranquilpeak theme demo">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
 <meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-05-27T22:48:38">
+  
+  
+    <meta property="article:modified_time" content="2019-05-27T22:48:38">
+  
+  
+  
+    
+      <meta property="article:section" content="category">
+    
+      <meta property="article:section" content="subcategory">
+    
+  
+  
+    
+      <meta property="article:tag" content="Angular">
+    
+      <meta property="article:tag" content="变更检测">
+    
+  
 
 
 <meta name="twitter:card" content="summary">
@@ -39,16 +61,14 @@
   <meta property="twitter:image" content="https://preservance717.github.io/avatar.jpg">
 
 
-    <title>LG</title>
+    <title>Angular ChangeDetection变更检测</title>
 
     <link rel="icon" href="https://preservance717.github.io/favicon.png">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://preservance717.github.io/index.xml">
-    
 
     
 
-    <link rel="canonical" href="https://preservance717.github.io/">
+    <link rel="canonical" href="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -68,7 +88,7 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
     <a class="header-title-link" href="https://preservance717.github.io/">LG</a>
@@ -88,7 +108,7 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
@@ -198,275 +218,115 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="4"
         class="
                hasCoverMetaIn
                ">
-        <section class="postShorten-group main-content-wrap">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Angular ChangeDetection变更检测
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>最近在做项目的过程中遇到一个问题：在回调函数里，数据发生变化时，视图并没有相应地更新。于是就在网上搜索解决方案，说是将<code>Component</code>中的<code>changeDetection</code>值修改为<code>ChangeDetectionStrategy.OnPush</code>，再在<code>constructor</code>里导入<code>ChangeDetectorRef</code>，最后在数据模型发生变化的地方添加<strong>变更检测的代码</strong>。</p>
+
+<pre><code class="language-js">@Component({
+    ...
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+
+export class DemoComponent {
+    construtor(private cdf: ChangeDetectorRef) {}
+
+    changeData() {
+        ... // 回调函数
+        this.data = {a: 1}; //变化的数据
+        this.cdf.markForCheck(); // 进行标注
+        this.cdf.detectChanges(); // 要多加一行这个 执行一次变化检测
+    }
+}
+</code></pre>
+
+<p>这样一来，修改后的数据更新在视图上，问题得到解决。
+但是<code>changeDetection</code>是什么？ 为什么加上<code>changeDetection</code>相关内容后，数据就会更新在视图上？没加之前，为什么有的数据更新了，有的没有更新呢？等等一系列的问题接踵而至。
+问题提出来了，现在要做的就是去解决问题。</p>
+
+<h3 id="what">What</h3>
+
+<p>changeDetection是什么呢？它是Angular的一个特性。当组件中的数据发生变化时，Angular自动检测到数据<strong>变化</strong>并<strong>更新</strong>相应的视图。
+一般情况下，将数据的状态以按钮、表单、链接或者图片形式呈现在视图上，也就是DOM。所以，我们将数据结构作为输入并生成DOM显示给用户这一过程称之为<strong>渲染</strong>。</p>
+
+<h3 id="why">Why</h3>
+
+<p>上文中提到数据变化，那数据为什么会变化呢？
+一般情况下，在进行异步的操作之后，数据就会发生变化。一般有三种情况：</p>
+
+<blockquote>
+<ul>
+<li><strong>Events</strong>: click、submit、onmouseup&hellip;</li>
+<li><strong>XHR请求</strong>: 从服务器获取数据</li>
+<li><strong>Timers</strong>: setTimeout()、setInterval()</li>
+</ul>
+</blockquote>
+
+<p>这些都是异步的，所以，有异步操作执行，数据就会发生变化，也是在这个时候<strong>通知</strong>Angular更新视图。</p>
+
+<h3 id="who">Who</h3>
+
+<p>刚才说通知Angular更新视图，那谁来通知Angular呢？<strong>NgZone</strong>来通知Angular更新视图。</p>
+
+<h3 id="how">How</h3>
+
+<p>以上，我们了解到ChangeDeteciton是如何触发的，但是怎么运行的呢？目前，我们所需要注意到的是：<strong>每个组件都有它自己的变更检测器</strong>。
+设想一个场景：
+&gt; 在一个组件中，一个按钮被点击，接下来会发生什么呢，当有数据发生变化时，Ngzone会做出处理并且通知Angular，最终Angular会执行变更检测。</p>
+
+<p>正如我们所知的，每个组件有它自己的变更检测器，一个Angular应用包含一个组件树，因此推断出一个angular应用也有一个<strong>变更检测树</strong>。这个树可以视为有向图，其中，数据始终从顶部流向底部。
+<img src="https://upload-images.jianshu.io/upload_images/3126944-4eedd458236b2293.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="cd-tree(图片来源于网络).png" /></p>
+
+<p>数据从顶部流向底部的原因时因为每个单独的组件，从根组件开始，每个组件也始终从上到下执行变更检测。这样的话，相比循环数据流，单向数据流更容易预测。我们总是知道数据来自何处，因为它只能来自其组件。</p>
+
+<h3 id="相关文档">相关文档</h3>
+
+<hr />
+
+<ul>
+<li><a href="https://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html">ANGULAR CHANGE DETECTION EXPLAINED</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
             
-  
-    
-      
-        
-      
-    
-  
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://preservance717.github.io/tags/angular/">Angular</a>
 
+  <a class="tag tag--primary tag--small" href="https://preservance717.github.io/tags/%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/">变更检测</a>
 
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/">
-          Angular ChangeDetection变更检测
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/angular-changedetection%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
+                  </div>
+                
+              
             
+            <div class="post-actions-wrap">
   
-    
-      
-        
-      
-    
-  
+</div>
 
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-          Sticky Footer的实现
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/sticky-footer%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
             
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8C%87%E5%8D%97/">
-          WebStorm快捷键指南
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>之前练习过一段时间的WebStorm的快捷键的使用，但是，因为我好久没有用，只记得大概的几个。所以现在整理下，对于WebStorm快捷键的使用。</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8C%87%E5%8D%97/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84this/">
-          JavaScript中的this
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>JavaScript中的this的指向在函数定义时，是不确定的。只有在函数运行的时候才能确定this指向谁。this可以是全局对象，当前对象或者任意对象。取决于函数的调用方式。JavaScript中函数调用的方式如下：作为对象方法调用，作为函数调用，作为构造函数调用和使用apply，bind调用。</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84this/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E7%9A%84for%E5%BE%AA%E7%8E%AF%E9%97%AD%E5%8C%85/">
-          JavaScript的for循环闭包
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E7%9A%84for%E5%BE%AA%E7%8E%AF%E9%97%AD%E5%8C%85/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/">
-          JavaScript中的Promise机制
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/javascript%E4%B8%AD%E7%9A%84promise%E6%9C%BA%E5%88%B6/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://preservance717.github.io/2019/05/hello/">
-          Hello
-        </a>
-      </h1>
-      
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>Hello Hugo</p>
-      
-      <p>
-        <a href="https://preservance717.github.io/2019/05/hello/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-          
-
-        </section>
+          </div>
+        </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
     &copy; 2019 L G. All Rights Reserved
@@ -474,6 +334,37 @@
 </footer>
 
       </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fangular-changedetection%25E5%258F%2598%25E6%259B%25B4%25E6%25A3%2580%25E6%25B5%258B%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fangular-changedetection%25E5%258F%2598%25E6%259B%25B4%25E6%25A3%2580%25E6%25B5%258B%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fpreservance717.github.io%2F2019%2F05%2Fangular-changedetection%25E5%258F%2598%25E6%259B%25B4%25E6%25A3%2580%25E6%25B5%258B%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
@@ -701,9 +592,12 @@ $(document).ready(function() {
 </script>
 
 
+  
+
 
 
 
     
   </body>
 </html>
+

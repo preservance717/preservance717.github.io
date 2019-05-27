@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WebStorm on LG</title>
+    <link>https://preservance717.github.io/tags/webstorm/</link>
+    <description>Recent content in WebStorm on LG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 27 May 2019 22:36:02 +0800</lastBuildDate>
+    
+	<atom:link href="https://preservance717.github.io/tags/webstorm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WebStorm快捷键指南</title>
+      <link>https://preservance717.github.io/2019/05/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Mon, 27 May 2019 22:36:02 +0800</pubDate>
+      
+      <guid>https://preservance717.github.io/2019/05/webstorm%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8C%87%E5%8D%97/</guid>
+      <description>&lt;p&gt;之前练习过一段时间的WebStorm的快捷键的使用，但是，因为我好久没有用，只记得大概的几个。所以现在整理下，对于WebStorm快捷键的使用。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
